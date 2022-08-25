@@ -19,8 +19,11 @@ function devide(a, b) {
 console.log(devide(6,2));
 
 function operate(operator, a, b) {
-    if (operator == add) {
-        return a + b
+    switch(operator) {
+        case '+': return add(a, b);
+        case '-': return subtract(a, b);
+        case '*': return multiply(a, b);
+        case '/': return devide(a, b);
     }
 }
-console.log(operate(add, 1, 2))
+console.log(operate('/', 1, 2));
