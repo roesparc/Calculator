@@ -1,22 +1,18 @@
 function add(a, b) {
     return a + b;
 }
-console.log(add(5,7));
 
 function subtract(a, b) {
     return a - b;
 }
-console.log(subtract(9,3));
 
 function multiply(a, b) {
     return a * b;
 }
-console.log(multiply(3,6));
 
 function devide(a, b) {
     return a / b;
 }
-console.log(devide(6,2));
 
 function operate(operator, a, b) {
     switch(operator) {
@@ -26,4 +22,26 @@ function operate(operator, a, b) {
         case '/': return devide(a, b);
     }
 }
-console.log(operate('/', 1, 2));
+
+const display = document.querySelector('.display');
+
+const clearbtn = document.querySelector('.clearbtn');
+
+const equalsbtn = document.querySelector('.equalsbtn');
+
+const addbtn = document.querySelector('.addbtn');
+
+const subtractbtn = document.querySelector('.subtractbtn');
+
+const multiplybtn = document.querySelector('.multiplybtn');
+
+const devidebtn = document.querySelector('.devidebtn');
+
+const numberButtons = document.querySelectorAll('.numberbtn');
+
+let displayValue = [];
+
+numberButtons.forEach(button => button.addEventListener('click', () => {
+    displayValue.push(button.textContent);
+    display.textContent = displayValue.toString().replace(/,/g, "");
+}));
