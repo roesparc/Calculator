@@ -59,6 +59,7 @@ numberButtons.forEach(number => number.addEventListener('click', () => {
 }));
 
 operatorButtons.forEach(operator => operator.addEventListener('click', () => {
+    if (displayValueToNumber === undefined) return;
     ongoingDisplay.textContent =
     `${displayValueToNumber} ${operator.textContent}`;
     if (previousValue !== undefined) {
