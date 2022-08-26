@@ -34,7 +34,7 @@ const operatorButtons = document.querySelectorAll('.operatorbtn');
 const numberButtons = document.querySelectorAll('.numberbtn');
 
 let displayValue = [];
-let firstValue = [];
+let previousValue;
 let operatorSelected;
 
 numberButtons.forEach(number => number.addEventListener('click', () => {
@@ -43,20 +43,31 @@ numberButtons.forEach(number => number.addEventListener('click', () => {
 }));
 
 operatorButtons.forEach(operator => operator.addEventListener('click', () => {
+    if (previousValue !== undefined) {
+        previousValue = operate(operatorSelected,
+            Number(previousValue.toString().replace(/,/g, "")),
+            Number(displayValue.toString().replace(/,/g, "")));
+        operatorSelected = operator.textContent;
+        displayValue = [];
+    } else {
     operatorSelected = operator.textContent;
-    firstValue = displayValue;
+    previousValue = displayValue;
     displayValue = [];
+    }
 }));
 
 equalsbtn.addEventListener('click', () => {
     display.textContent = operate(operatorSelected,
-        firstValue.toString().replace(/,/g, ""),
-        displayValue.toString().replace(/,/g, ""));
+        Number(previousValue.toString().replace(/,/g, "")),
+        Number(displayValue.toString().replace(/,/g, "")));
+    displayValue = [];
+    previousValue = undefined;
+    operatorSelected = undefined;
 });
 
 clearbtn.addEventListener('click', () => {
     displayValue = [];
-    firstValue = [];
-    operatorSelected = null;
+    previousValue = undefined;
+    operatorSelected = undefined;
     display.textContent = 0;
 });
