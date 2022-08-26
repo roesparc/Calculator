@@ -67,10 +67,13 @@ operatorButtons.forEach(operator => operator.addEventListener('click', () => {
     operatorSelected = operator.textContent;
     previousValue = displayValueToNumber;
     displayValue = [];
+    displayValueToNumber = undefined;
     }
 }));
 
 equalsBtn.addEventListener('click', () => {
+    if (previousValue === undefined
+        || displayValueToNumber === undefined) return;
     ongoingDisplay.textContent =
     `${previousValue} ${operatorSelected}
     ${displayValueToNumber}`;
