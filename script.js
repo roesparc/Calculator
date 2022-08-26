@@ -10,7 +10,7 @@ function multiply(a, b) {
     return a * b;
 }
 
-function devide(a, b) {
+function divide(a, b) {
     return a / b;
 }
 
@@ -19,13 +19,13 @@ function operate(operator, a, b) {
         case '+': return add(a, b);
         case '-': return subtract(a, b);
         case '×': return multiply(a, b);
-        case '÷': return devide(a, b);
+        case '÷': return divide(a, b);
     }
 }
 
 const display = document.querySelector('.display');
 
-const ongoingDisplay = document.querySelector('.ongoingDisplay')
+const ongoingDisplay = document.querySelector('.ongoingDisplay');
 
 const clearBtn = document.querySelector('.clearBtn');
 
@@ -41,7 +41,12 @@ let previousValue;
 let operatorSelected;
 
 numberButtons.forEach(number => number.addEventListener('click', () => {
-    if (number.textContent === displayValue.find(value => value === '.')) return;
+    if (display.textContent === 'ERROR') {
+        display.textContent = 0;
+        ongoingDisplay.textContent = '';
+    }
+    if (number.textContent ===
+        displayValue.find(value => value === '.')) return;
     if (displayValue.length === 0 && number.textContent === '.') {
         displayValue.push('0', '.');
     } else {
@@ -57,18 +62,25 @@ operatorButtons.forEach(operator => operator.addEventListener('click', () => {
     ongoingDisplay.textContent =
     `${displayValueToNumber} ${operator.textContent}`;
     if (previousValue !== undefined) {
-        previousValue = Math.round(operate(operatorSelected,
+        if (operatorSelected === '÷'
+        && displayValueToNumber === 0) {
+            display.textContent = 'ERROR';
+            ongoingDisplay.textContent =
+            `${previousValue} ${operatorSelected}
+            ${displayValueToNumber}`;
+            previousValue = undefined;
+        } else {    
+            previousValue = Math.round(operate(operatorSelected,
             previousValue, displayValueToNumber)*1000)/1000;
-        ongoingDisplay.textContent =
-        `${previousValue} ${operator.textContent}`;
-        operatorSelected = operator.textContent;
-        displayValue = [];
+            ongoingDisplay.textContent =
+            `${previousValue} ${operator.textContent}`;
+        }
     } else {
+        previousValue = displayValueToNumber;
+    }
     operatorSelected = operator.textContent;
-    previousValue = displayValueToNumber;
     displayValue = [];
     displayValueToNumber = undefined;
-    }
 }));
 
 equalsBtn.addEventListener('click', () => {
@@ -77,8 +89,12 @@ equalsBtn.addEventListener('click', () => {
     ongoingDisplay.textContent =
     `${previousValue} ${operatorSelected}
     ${displayValueToNumber}`;
-    display.textContent = Math.round(operate(operatorSelected,
+    if (operatorSelected === '÷' && displayValueToNumber === 0) {
+        display.textContent = 'ERROR';
+    } else {
+        display.textContent = Math.round(operate(operatorSelected,
         previousValue, displayValueToNumber)*1000)/1000;
+    }
     displayValue = [];
     previousValue = undefined;
     operatorSelected = undefined;
