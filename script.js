@@ -41,18 +41,24 @@ let previousValue;
 let operatorSelected;
 
 numberButtons.forEach(number => number.addEventListener('click', () => {
-    displayValue.push(number.textContent);
+    if (number.textContent === displayValue.find(value => value === '.')) return;
+    if (displayValue.length === 0 && number.textContent === '.') {
+        displayValue.push('0', '.');
+    } else {
+        displayValue.push(number.textContent);
+    }
     displayValueToNumber =
     Number(displayValue.toString().replace(/,/g, ""));
-    display.textContent = displayValueToNumber;    
+    display.textContent =
+    displayValue.toString().replace(/,/g, "");
 }));
 
 operatorButtons.forEach(operator => operator.addEventListener('click', () => {
     ongoingDisplay.textContent =
     `${displayValueToNumber} ${operator.textContent}`;
     if (previousValue !== undefined) {
-        previousValue = operate(operatorSelected,
-            previousValue, displayValueToNumber);
+        previousValue = Math.round(operate(operatorSelected,
+            previousValue, displayValueToNumber)*1000)/1000;
         ongoingDisplay.textContent =
         `${previousValue} ${operator.textContent}`;
         operatorSelected = operator.textContent;
@@ -68,16 +74,18 @@ equalsBtn.addEventListener('click', () => {
     ongoingDisplay.textContent =
     `${previousValue} ${operatorSelected}
     ${displayValueToNumber}`;
-    display.textContent = operate(operatorSelected,
-        previousValue, displayValueToNumber);
+    display.textContent = Math.round(operate(operatorSelected,
+        previousValue, displayValueToNumber)*1000)/1000;
     displayValue = [];
     previousValue = undefined;
     operatorSelected = undefined;
+    displayValueToNumber = Number(display.textContent);
 });
 
 clearBtn.addEventListener('click', () => {
     ongoingDisplay.textContent = '';
     displayValue = [];
+    displayValueToNumber = undefined;
     previousValue = undefined;
     operatorSelected = undefined;
     display.textContent = 0;
