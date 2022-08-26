@@ -25,47 +25,58 @@ function operate(operator, a, b) {
 
 const display = document.querySelector('.display');
 
-const clearbtn = document.querySelector('.clearbtn');
+const ongoingDisplay = document.querySelector('.ongoingDisplay')
 
-const equalsbtn = document.querySelector('.equalsbtn');
+const clearBtn = document.querySelector('.clearBtn');
 
-const operatorButtons = document.querySelectorAll('.operatorbtn');
+const equalsBtn = document.querySelector('.equalsBtn');
 
-const numberButtons = document.querySelectorAll('.numberbtn');
+const operatorButtons = document.querySelectorAll('.operatorBtn');
+
+const numberButtons = document.querySelectorAll('.numberBtn');
 
 let displayValue = [];
+let displayValueToNumber;
 let previousValue;
 let operatorSelected;
 
 numberButtons.forEach(number => number.addEventListener('click', () => {
     displayValue.push(number.textContent);
-    display.textContent = displayValue.toString().replace(/,/g, "");    
+    displayValueToNumber =
+    Number(displayValue.toString().replace(/,/g, ""));
+    display.textContent = displayValueToNumber;    
 }));
 
 operatorButtons.forEach(operator => operator.addEventListener('click', () => {
+    ongoingDisplay.textContent =
+    `${displayValueToNumber} ${operator.textContent}`;
     if (previousValue !== undefined) {
         previousValue = operate(operatorSelected,
-            Number(previousValue.toString().replace(/,/g, "")),
-            Number(displayValue.toString().replace(/,/g, "")));
+            previousValue, displayValueToNumber);
+        ongoingDisplay.textContent =
+        `${previousValue} ${operator.textContent}`;
         operatorSelected = operator.textContent;
         displayValue = [];
     } else {
     operatorSelected = operator.textContent;
-    previousValue = displayValue;
+    previousValue = displayValueToNumber;
     displayValue = [];
     }
 }));
 
-equalsbtn.addEventListener('click', () => {
+equalsBtn.addEventListener('click', () => {
+    ongoingDisplay.textContent =
+    `${previousValue} ${operatorSelected}
+    ${displayValueToNumber}`;
     display.textContent = operate(operatorSelected,
-        Number(previousValue.toString().replace(/,/g, "")),
-        Number(displayValue.toString().replace(/,/g, "")));
+        previousValue, displayValueToNumber);
     displayValue = [];
     previousValue = undefined;
     operatorSelected = undefined;
 });
 
-clearbtn.addEventListener('click', () => {
+clearBtn.addEventListener('click', () => {
+    ongoingDisplay.textContent = '';
     displayValue = [];
     previousValue = undefined;
     operatorSelected = undefined;
