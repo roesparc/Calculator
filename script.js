@@ -27,7 +27,9 @@ const display = document.querySelector('.display');
 
 const ongoingDisplay = document.querySelector('.ongoingDisplay');
 
-const clearBtn = document.querySelector('.clearBtn');
+const allClearBtn = document.querySelector('.allClearBtn');
+
+const backspaceBtn = document.querySelector('.backspaceBtn');
 
 const equalsBtn = document.querySelector('.equalsBtn');
 
@@ -40,7 +42,11 @@ let displayValueToNumber;
 let previousValue;
 let operatorSelected;
 
-numberButtons.forEach(number => number.addEventListener('click', () => {
+numberButtons.forEach
+(number => number.addEventListener('click', () => {
+    if (previousValue === undefined) {
+        ongoingDisplay.textContent = '';
+    }
     if (display.textContent === 'ERROR') {
         ongoingDisplay.textContent = '';
     }
@@ -63,7 +69,8 @@ numberButtons.forEach(number => number.addEventListener('click', () => {
     }
 }));
 
-operatorButtons.forEach(operator => operator.addEventListener('click', () => {
+operatorButtons.forEach
+(operator => operator.addEventListener('click', () => {
     if (displayValueToNumber === undefined) return;
     ongoingDisplay.textContent =
     `${displayValueToNumber} ${operator.textContent}`;
@@ -107,11 +114,23 @@ equalsBtn.addEventListener('click', () => {
     displayValueToNumber = Number(display.textContent);
 });
 
-clearBtn.addEventListener('click', () => {
+allClearBtn.addEventListener('click', () => {
     ongoingDisplay.textContent = '';
     displayValue = [];
     displayValueToNumber = undefined;
     previousValue = undefined;
     operatorSelected = undefined;
     display.textContent = 0;
+});
+
+backspaceBtn.addEventListener('click', () => {
+    displayValue.pop();
+    displayValueToNumber =
+    Number(displayValue.toString().replace(/,/g, ""));
+    display.textContent =
+    displayValue.toString().replace(/,/g, "");
+    if (displayValue.length === 0) {
+        display.textContent = 0;
+        displayValueToNumber = undefined;
+    }
 });
