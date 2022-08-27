@@ -42,20 +42,25 @@ let operatorSelected;
 
 numberButtons.forEach(number => number.addEventListener('click', () => {
     if (display.textContent === 'ERROR') {
-        display.textContent = 0;
         ongoingDisplay.textContent = '';
     }
-    if (number.textContent ===
-        displayValue.find(value => value === '.')) return;
-    if (displayValue.length === 0 && number.textContent === '.') {
-        displayValue.push('0', '.');
+    if (displayValue.length === 0 && number.textContent == '0') { 
+        display.textContent = 0;
+        displayValueToNumber = 0;
     } else {
-        displayValue.push(number.textContent);
+        if (number.textContent ===
+            displayValue.find(value => value === '.')) return;
+        if (displayValue.length === 0
+            && number.textContent === '.') {
+            displayValue.push('0', '.');
+        } else {
+            displayValue.push(number.textContent);
+        }
+        displayValueToNumber =
+        Number(displayValue.toString().replace(/,/g, ""));
+        display.textContent =
+        displayValue.toString().replace(/,/g, "");
     }
-    displayValueToNumber =
-    Number(displayValue.toString().replace(/,/g, ""));
-    display.textContent =
-    displayValue.toString().replace(/,/g, "");
 }));
 
 operatorButtons.forEach(operator => operator.addEventListener('click', () => {
@@ -89,7 +94,7 @@ equalsBtn.addEventListener('click', () => {
         || displayValueToNumber === undefined) return;
     ongoingDisplay.textContent =
     `${previousValue} ${operatorSelected}
-    ${displayValueToNumber}`;
+    ${displayValueToNumber} =`;
     if (operatorSelected === '÷' && displayValueToNumber === 0) {
         display.textContent = 'ERROR';
     } else {
