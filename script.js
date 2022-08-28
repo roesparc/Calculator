@@ -174,6 +174,6 @@ document.addEventListener('keydown', (e) => {
     if (e.key == '*') operatorButtons.item(1).click();
     if (e.key == '/') operatorButtons.item(0).click();
     if (e.key == 'Backspace') backspaceBtn.click();
-    if (e.key == 'Delete') allClearBtn.click()
+    if (e.key == 'Delete') allClearBtn.click();
     if (e.key == 'Enter') equalsBtn.click();
 });
