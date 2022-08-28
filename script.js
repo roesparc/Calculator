@@ -17,7 +17,7 @@ function divide(a, b) {
 function operate(operator, a, b) {
     switch(operator) {
         case '+': return add(a, b);
-        case '-': return subtract(a, b);
+        case '−': return subtract(a, b);
         case '×': return multiply(a, b);
         case '÷': return divide(a, b);
     }
@@ -71,6 +71,20 @@ numberButtons.forEach
 
 operatorButtons.forEach
 (operator => operator.addEventListener('click', () => {
+    if (display.textContent === 'ERROR') return;
+    if (operatorSelected !== undefined
+        && displayValueToNumber === undefined) {
+        operatorSelected = operator.textContent;
+        ongoingDisplay.textContent =
+        `${previousValue} ${operator.textContent}`;    
+    }
+    if (displayValueToNumber === undefined
+        && previousValue === undefined) {
+        previousValue = 0;
+        operatorSelected = operator.textContent;
+        ongoingDisplay.textContent =
+        `${previousValue} ${operator.textContent}`;    
+    }
     if (displayValueToNumber === undefined) return;
     ongoingDisplay.textContent =
     `${displayValueToNumber} ${operator.textContent}`;
@@ -124,6 +138,14 @@ allClearBtn.addEventListener('click', () => {
 });
 
 backspaceBtn.addEventListener('click', () => {
+    if (display.textContent === 'ERROR') {
+        ongoingDisplay.textContent = '';
+        displayValue = [];
+        displayValueToNumber = undefined;
+        previousValue = undefined;
+        operatorSelected = undefined;
+        display.textContent = 0;
+    }
     displayValue.pop();
     displayValueToNumber =
     Number(displayValue.toString().replace(/,/g, ""));
@@ -133,4 +155,25 @@ backspaceBtn.addEventListener('click', () => {
         display.textContent = 0;
         displayValueToNumber = undefined;
     }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key == '0') numberButtons.item(9).click();
+    if (e.key == '1') numberButtons.item(6).click();
+    if (e.key == '2') numberButtons.item(7).click();
+    if (e.key == '3') numberButtons.item(8).click();
+    if (e.key == '4') numberButtons.item(3).click();
+    if (e.key == '5') numberButtons.item(4).click();
+    if (e.key == '6') numberButtons.item(5).click();
+    if (e.key == '7') numberButtons.item(0).click();
+    if (e.key == '8') numberButtons.item(1).click();
+    if (e.key == '9') numberButtons.item(2).click();
+    if (e.key == '.') numberButtons.item(10).click();
+    if (e.key == '+') operatorButtons.item(3).click();
+    if (e.key == '-') operatorButtons.item(2).click();
+    if (e.key == '*') operatorButtons.item(1).click();
+    if (e.key == '/') operatorButtons.item(0).click();
+    if (e.key == 'Backspace') backspaceBtn.click();
+    if (e.key == 'Delete') allClearBtn.click()
+    if (e.key == 'Enter') equalsBtn.click();
 });
