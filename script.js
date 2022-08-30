@@ -177,3 +177,9 @@ document.addEventListener('keydown', (e) => {
     if (e.key == 'Delete') allClearBtn.click();
     if (e.key == 'Enter') equalsBtn.click();
 });
+
+document.addEventListener('keydown', (e) => {
+    if (e.key == 'Enter') {
+        e.preventDefault();
+    }
+  });
