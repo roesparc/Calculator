@@ -1,0 +1,107 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(29, 29, 29);
+    border: 3px solid rgb(255, 145, 0);
+    border-radius: 20px;
+    padding: 15px;
+    width: 256px;
+    box-shadow: 3px 6px 10px grey;
+    margin-top: 90px;
+    margin-bottom: 20px;
+}
+
+.displayContainer {
+    font-family: sans-serif;
+    color: white;
+    text-align: right;
+    font-size: 48px;
+    margin: 10px 0;
+    padding-right: 16px;
+}
+
+.ongoingDisplay {
+    font-family: sans-serif;
+    font-size: 24px;
+    color: rgb(151, 151, 151);
+    height: 28px;
+}
+
+button {
+    font-family: sans-serif;
+    font-size: 24px;
+    color: white;
+    width: 55px;
+    height: 55px;
+    background-color: rgb(66, 66, 66);
+    border-radius: 50%;
+    border: none;
+    margin: 3px;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: rgb(151, 151, 151);
+    color: black;
+    cursor: pointer;
+}
+
+button:active {
+    transform: translateY(0.1rem);
+    transition: none;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.operatorBtn,
+.equalsBtn {
+    background-color: rgb(255, 145, 0);
+    color: black;
+}
+
+.operatorBtn:hover,
+.equalsBtn:hover {
+    background-color: rgb(255, 81, 0);
+    color: white;
+}
+
+.backspaceBtn,
+.allClearBtn {
+    width: 87.5px;
+    border-radius: 40px;
+    background-color: rgb(151, 151, 151);
+    color: black;
+}
+
+.backspaceBtn:hover,
+.allClearBtn:hover {
+    background-color: rgb(66, 66, 66);
+    color: white;
+}
+
+#zero {
+    width: 120px;
+    border-radius: 40px;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.foot {
+    font-family: sans-serif;
+    text-shadow: 2px 2px 5px grey;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(255, 81, 0);
+}
